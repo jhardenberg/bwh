@@ -1,0 +1,19 @@
+name = "bwh"
+uuid = "c9d4e0a8-bc61-4bb8-adda-d37c78634daf"
+authors = ["Jost von Hardenberg <j.vonhardenberg@isac.cnr.it>"]
+version = "0.1.0"
+
+[deps]
+BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
+DelimitedFiles = "8bb1440f-4735-579b-a4ab-409b98df4dab"
+DiffEqOperators = "9fdde737-9c7f-55bf-ade8-46b3f136cc48"
+DifferentialEquations = "0c46a032-eb83-5123-abaf-570d42b7fbaa"
+FFTW = "7a1cc6ca-52ef-59f5-83cd-3a7055c09341"
+ImageFiltering = "6a3955dd-da59-5b1f-98d4-e7296123deb5"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+Parameters = "d96e819e-fc66-5662-9728-84c9c7592b0a"
+Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
+PyPlot = "d330b81b-6aea-500a-939a-2ce795aea3ee"
+SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
+Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"

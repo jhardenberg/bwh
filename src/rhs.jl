@@ -18,7 +18,6 @@ function rhs_h!(ht, h, p, t)
 end
 
 function steadyh!(h, In, P)
-#    h .= ones(nx,ny).*P.p./infilt(b,P)
     probh=SteadyStateProblem(rhs_h!, h, (In, P))
     hh=solve(probh, DynamicSS(Tsit5(), tspan=0.2*P.dx*P.dx/P.dw), save_everystep=false, save_start = false);
     h.=hh.u
@@ -27,7 +26,7 @@ end
 
 function rhs_stat!(ut, u, p, t)
 
-    global iintb, iintw
+    global iint
 
     P, fg, σ, h, bint, wint = p
     b = @view u[:,:,1]
@@ -36,24 +35,18 @@ function rhs_stat!(ut, u, p, t)
     wt = @view ut[:,:,2]
 
     I = infilt(b, P)
+    
+    # Compute steady h solution
     steadyh!(h, I, P);
-    α = initapprox(b, P.η, σ)
 
-    # Compute integrals only every nintb or nintw steps
-#    @show iintb, P.nintb
-    if(mod(iintb,P.nintb)==0)
-#        @show "Computing b"
+    # Compute integrals only every nint steps
+    if(mod(iint,P.nint)==0)
+        α = initapprox(b, P.η, σ)
         bint .= approxintb(w, fg, α)
-        iintb=0
-#    else
-#        @show "Not computing b"
-    end
-    if(mod(iintw,P.nintw)==0)
         wint .= approxintw(b, fg, α)
-        iintw=0
+        iintb = 0
     end
-    iintb+=1
-    iintw+=1
+    iint += 1
 
 @.  bt = P.ν*b*(1-b)*bint - b  + P.db*$laplacian(b, P.dx)
 @.  wt = I*h - P.ν*w/(1+P.ρ*b) - P.γ*w*wint + P.dw*$laplacian(w, P.dx)
