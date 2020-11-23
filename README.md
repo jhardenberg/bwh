@@ -1,4 +1,4 @@
-# bwh
+# ![BWH logo](/docs/src/assets/bwh.png) bwh
 
 Vegetation patterns following Gilad et al. 2004, 2006, 2007
 
