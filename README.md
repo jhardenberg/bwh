@@ -4,7 +4,7 @@ Vegetation patterns following Gilad et al. 2004, 2006, 2007
 
 ## Basic usage
 
-Edit `Parameters.jl` with your parameters (the defaults are those from Gilad et aal. 2007).
+Edit `Parameters.jl` with your parameters (the defaults are those from Gilad et al. 2007).
 Run either the code in `main.jl` or do
 ```
 import bwh
