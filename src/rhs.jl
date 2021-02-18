@@ -36,9 +36,6 @@ function rhs_stat!(ut, u, p, t)
 
     I = infilt(b, P)
     
-    # Compute steady h solution
-    steadyh!(h, I, P);
-
     # Compute integrals only every nint steps
     if(mod(iint,P.nint)==0)
         α = initapprox(b, P.η, σ)
@@ -49,7 +46,7 @@ function rhs_stat!(ut, u, p, t)
     iint += 1
 
 @.  bt = P.ν*b*(1-b)*bint - b  + P.db*$laplacian(b, P.dx)
-@.  wt = I*h - P.ν*w/(1+P.ρ*b) - P.γ*w*wint + P.dw*$laplacian(w, P.dx)
+@.  wt = P.p - P.ν*w - P.γ*w*wint + P.dw*$laplacian(w, P.dx)
 
     nothing
 end
