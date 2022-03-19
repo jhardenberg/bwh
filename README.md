@@ -1,4 +1,5 @@
 # ![BWH logo](/docs/src/assets/bwh-small.png) bwh
+![stand with Ukraine](https://badgen.net/badge/stand%20with/UKRAINE/?color=0057B8&labelColor=FFD700)
 
 Vegetation patterns following Gilad et al. 2004, 2006, 2007
 
