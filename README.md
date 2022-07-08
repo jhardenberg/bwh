@@ -5,7 +5,7 @@ Vegetation patterns following Gilad et al. 2004, 2006, 2007
 
 ## Basic usage
 
-Edit `Parameters.jl` with your parameters (the defaults are those from Gilad et al. 2007).
+Edit `Params.jl` with your parameters (the defaults are those from Gilad et al. 2007).
 An example of basic usage running up to time dt*nstep=10 (dt=0.1) 
 with precipitation p=1.2 on a 128x128 grid, plotting results during the simulation: 
 
