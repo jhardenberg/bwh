@@ -8,14 +8,27 @@ function gaussian(s, N)
     return as
 end
 
-# Convolution tramite trasformata di Fourier in avanti e indietro
-function convolve(b, gf::Vector{Complex{Float64}})
-    return real(ifft(gf .* fft(b)))
+function convfour(b, gf::Array{Complex{Float64},1})
+    return real(ifft(gf.*fft(b)))
+end
+
+function convfour(bf::Array{Complex{Float64},1}, gf::Array{Complex{Float64},1})
+    return real(ifft(gf.*bf))
+end
+
+function convfour!(bf::Array{Complex{Float64},1}, gf::Array{Complex{Float64},1})
+    bf .*= gf
+    ifft!(bf)
+    bf.= real(bf)
 end
 
 # Inizializzazione del vettore di sigma
 function initsigma(smin, smax, Nsigma)
-    σ = exp10.(range(log10(smin), stop=log10(smax), length=Nsigma))
+    σ = zeros(Nsigma)
+    fact = (smax/smin) ^ (1. /(Nsigma-1))
+    for i = 1:Nsigma
+        σ[i]=smin*fact^(i-1)
+    end
     return σ
 end
 
@@ -30,16 +43,16 @@ function initfg(sigma, n, dx)
 end
 
 # Calcolo del vettore α
-function alphal(φ, φi)				#::Vector{Float64}, φi::Vector{Float64})
+function alphal(φ::Array{Float64, 1}, φi::Array{Float64, 1})      #, φi)
     nl = length(φi)
     nx = length(φ)
-    α = similar(φ, nx, nl)
+    α = Array{Float64,2}(undef, nx, nl)                       #similar(φ, nx, nl)
     φ2 = φ.^2
     φi2 = φi.^2
-    aa = similar(φ)
+    aa = Array{Float64,1}(undef, nx)                          #similar(φ)
     for l = 1:nl
         aa .= 2 .* φ2 ./ (φ2 .+ φi2[l])
-        for j in [1:l-1; l+1:nl]
+        for j in [collect(1:(l-1)); collect((l+1):nl)]
             aa .*= ((φ2 .- φi2[j]) ./ (φ2 .+ φi2[j])) .* ((φi2[l] + φi2[j]) / (φi2[l] - φi2[j]))
         end
         α[:, l] .= aa
@@ -53,7 +66,7 @@ function approxintb(w, fg::Matrix{Complex{Float64}}, α)
     wf = fft(w)
     z = similar(w)
     for l = 1:ns
-        cf = convolve(wf, fg[:, l])
+        cf = convfour(wf, fg[:, l])
         z .+= α[:, l] .* cf
     end
     return z
@@ -66,7 +79,7 @@ function approxintw(b, fg::Matrix{Complex{Float64}}, α)
     z = similar(b)
     for l = 1:ns
         ab .= α[:, l] .* b
-        z .+= convolve(ab, fg[:, l])
+        z .+= convfour(ab, fg[:, l])
     end
     return z
 end
@@ -76,4 +89,9 @@ function initapprox(b, η, sigma)
     φ = 1.0 .+ η .* b
     α = alphal(φ, sigma)
     return α
+end
+
+
+function approx(b)
+	return (1 .+ P.η.*b)
 end
