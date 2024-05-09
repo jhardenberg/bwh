@@ -13,7 +13,13 @@
     db::Float64 = 0.0333333      # b diffusivity
     dw::Float64 = 3.33333        # w diffusivity
     dh::Float64 = 333.333        # h diffusivity
-    p::Float64 = 1.2             # precipitation rate
+    p::Float64 = 2               # precipitation rate
+
+# Added parameters for run control
+    non_loc::Int = 2             # if set to 0 the root augmentation feedback is ignored (all terms become local apart from the diffusion)
+                                 # if set to 1 we have the full model (Gilad et al. 2004/2007)
+                                 # if set to 2 we have the simplified Zelnik model (Zelnik et al. 2015), the root augmentation is reduced to the local term (1+ηb) and there is no h 
+    manual_laplacian::Int = 0    # if set to 1 the laplacian is computed "manually" Kernel.Laplacian (to be used for network conversion)
 
 # Domain size
     Lx::Float64 = 28             # nondimensional X Domain size
@@ -27,9 +33,9 @@
     nint::Int64 = 3              # Frequency for b and w integral calculation (could be 1, but not much more than 3)
 
 # Run control options
-    outfile = "bwh.dat"          # Name of output file
+    outfile="bwh.dat"          # Name of output file
     initfile = "bwh.init.dat"    # Name of initialization file (used if freadinit==true)
-    finalfile = "bwh.final.dat"  # Name of final state
+    finalfile="bwh.final.dat"  # Name of final state
     freadinit::Bool = false      # Start from restart
     fplot::Bool = false          # if to show plots during run
     fsave::Bool = true           # if to save intermediate results

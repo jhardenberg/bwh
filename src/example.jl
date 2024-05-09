@@ -1,11 +1,17 @@
-# Little example for a run lasting 100 nondimensional times
-# at 128x128 resolution
-# (about 1h30m running on single processor)
+# Example run 
+# non dimensional time 1000=nstepxdt (100 years with deafult params) 
+# non dimensional p=1.7 (P=95 mm/year)
+# non dimensional Lx=168 (56x56 metres) on a 200x200 grid
+# the random connections are applied only to the water component (phib=0, phiw=0.02)
+# phiw is the fraction of random connections over the total regular lattice connections
 
 using Pkg; Pkg.activate(".")
+include("./bwh.jl")
 using bwh
-# Run up to time dt*nstep=100 with p=1.2 on a 128x128 grid 
-# plotting results during integration
-P = Params(nx=128, ny=128, p=1.2, nstep=100, fplot=true)
+using Plots
+
+# save plots during integration 
+P = Params_Zelnik(nx=200, ny=200, p=1.7, manual_laplacian=1, phiw=0.02, nstep=10000, fplotsave=true)
 b,w,h = bwh.main(P)
-plotbwh(b, w, h, P, P.dt*100)
+plotbw(b, w, P, P.dt*P.nstep)
+savefig("final_plot.png")
