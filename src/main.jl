@@ -9,14 +9,22 @@ function main(P=nothing; p=1.2, nstep=100)
     
     #generate shortcuts for the water diffusion
     if P.phiw>0 
-        n_t_w=network_disturbance(P.nx, P.ny, P.phiw)
+        if P.d_max_w!=P.nx
+           n_t_w=network_disturbance_limited(P.nx, P.ny, P.phiw, P.d_max_w)
+        else
+           n_t_w=network_disturbance(P.nx, P.ny, P.phiw)
+        end
     else 
         n_t_w=collect(1:(P.nx*P.ny))
     end
     
     #generate shortcuts for the biomass diffusion
     if P.phib>0 
-        n_t_b=network_disturbance(P.nx, P.ny, P.phib)
+        if P.d_max_b!=P.nx
+           n_t_b=network_disturbance_limited(P.nx, P.ny, P.phib, P.d_max_b)
+        else
+           n_t_b=network_disturbance(P.nx, P.ny, P.phib)
+        end
     else 
         n_t_b=collect(1:(P.nx*P.ny))
     end

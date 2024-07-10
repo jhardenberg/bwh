@@ -32,13 +32,12 @@ function integrate( b, w, P, nstep, n_t_w, n_t_b; fplot=false, fplotsave=false, 
         # Plot solutions
         if (fplot==true) || (fplotsave & (mod(i, nplotsave)==0))
             if P.non_loc==2 #h is constant in the reduced version of the model (Zelnik et al. 2015)
-               plotbw(u[:,:,1], u[:,:,2], P, ttot)
+               plotbw(u[:,:,1], u[:,:,2], P, ttot, n_t_w, n_t_b)
             else                                     
                plotbwh(u[:,:,1], u[:,:,2], h, P, ttot)
             end
             if(fplotsave & (mod(i, nplotsave)==0))
                savefig(P.dirplotsave*"t="*string(round(ttot, digits=0))*".png")
-               close()
             end
         end
 

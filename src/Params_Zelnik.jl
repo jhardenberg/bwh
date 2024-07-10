@@ -34,6 +34,8 @@
     dx::Float64 = Lx/nx      
     nsigma::Int64 = 12           # Number of sigmas in the integral approximation (12-16 probably ok)
     nint::Int64 = 3              # Frequency for b and w integral calculation (could be 1, but not much more than 3)
+    d_max_w::Int64 = nx          # Maximum distance spanned by the random connections for the water diffusion
+    d_max_b::Int64 = nx          # Maximum distance spanned by the random connections for the biomass diffusion
 
 # Run control options
     outfile="bwh.dat"           # Name of output file
@@ -43,9 +45,9 @@
     fplot::Bool = false          # if to show plots during run
     fplotsave::Bool = false      # if to save intermediate plots
     nplotsave::Int64 = 500       # How often to save plots
-    dirplotsave::String="none"
+    dirplotsave::String=""
     fsave::Bool = true           # if to save intermediate results
-    dt::Float64 = 0.1            # Length of a single integration chunk (this value seems ok)
+    dt::Float64 = 0.1          # Length of a single integration chunk (this value seems ok)
     nsave::Int64 = 10            # How often (in chunks) to save
     nstep::Int64 = 100           # How many chuncks to run  (total runtime = nstep*dt)
 end

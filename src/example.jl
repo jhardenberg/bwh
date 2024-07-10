@@ -1,17 +1,18 @@
-# Example run 
-# non dimensional time 1000=nstepxdt (100 years with deafult params) 
-# non dimensional p=1.7 (P=95 mm/year)
-# non dimensional Lx=168 (56x56 metres) on a 200x200 grid
-# the random connections are applied only to the water component (phib=0, phiw=0.02)
-# phiw is the fraction of random connections over the total regular lattice connections
-
 using Pkg; Pkg.activate(".")
 include("./bwh.jl")
-using bwh
+using .bwh
 using Plots
+using VideoIO
+using Images
 
-# save plots during integration 
-P = Params_Zelnik(nx=200, ny=200, p=1.7, manual_laplacian=1, phiw=0.02, nstep=10000, fplotsave=true)
-b,w,h = bwh.main(P)
-plotbw(b, w, P, P.dt*P.nstep)
-savefig("final_plot.png")
+#setting precipitation and density random connection
+p=1.9
+phi=0.01
+#directory where to save the intermediate plots and video
+dir=""
+
+P = Params_Zelnik(nx=200, ny=200, p=p, manual_laplacian=1, phiw=phi, nstep=25001, fplotsave=true, dirplotsave=dir)
+b,w,h = bwh.main(P) 
+bwh.produce_video(dir) 
+
+
