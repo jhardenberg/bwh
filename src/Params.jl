@@ -14,6 +14,8 @@
     dw::Float64 = 3.33333        # w diffusivity
     dh::Float64 = 333.333        # h diffusivity
     p::Float64 = 1.2             # precipitation rate
+    c::Float64 = 0.2             # clonal growth speed
+    ϵ::Float64 = 0.0008          # clonal growth regularization
 
 # Domain size
     Lx::Float64 = 28             # nondimensional X Domain size

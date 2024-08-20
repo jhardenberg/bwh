@@ -1,9 +1,7 @@
 function integrate( b, w, P, nstep; fplot=false, fsave=false, nsave=10)
 
-    # Initial guess for h
-    h = ones(P.nx,P.ny).*P.p./infilt(b,P)
-    In=infilt(b,P)
-    steadyh!(h,In, P)
+    # we assume h to be always 0
+    h = zeros(P.nx,P.ny) 
 
     # Init fields for integral approximation
     σ=initsigma(1.0, 1. +(P.η)*1.1, P.nsigma)
@@ -17,12 +15,12 @@ function integrate( b, w, P, nstep; fplot=false, fsave=false, nsave=10)
     for i=1:nstep
         @printf("t=%4.3f <b>=%1.4f (%1.4f, %1.4f) <w>=%1.4f (%1.4f, %1.4f)", ttot, mean(u[:,:,1]), minimum(u[:,:,1]), maximum(u[:,:,1]), mean(u[:,:,2]), minimum(u[:,:,2]), maximum(u[:,:,2]))
 
-        ttot+=P.dt
+        ttot += P.dt
 
         # Integrate over chunck P.dt
         prob = ODEProblem(rhs_stat!, u, (0.,P.dt), (P, fg, σ, h, bint, wint))
         @time sol=solve(prob, save_everystep=false, save_start=false);
-        u=sol[1]
+        u=sol[end]
 
         # Plot solutions
         if(fplot==true)
@@ -36,6 +34,7 @@ function integrate( b, w, P, nstep; fplot=false, fsave=false, nsave=10)
                 writedlm(io, reshape(cat(u,h,dims=3), P.nx*P.ny, 3))
             end
         end
+
 
     end
 

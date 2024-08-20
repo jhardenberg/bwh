@@ -9,3 +9,8 @@ function laplacian!(af, a, dx)
     nothing
 end
 
+# function gradient_2d(a, dx)
+#     kl=Kernel.gaussian(dx) 
+#     return imfilter(a, kl, "circular")
+# end
+
