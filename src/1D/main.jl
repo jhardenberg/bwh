@@ -1,4 +1,4 @@
-function main_swarnendu(P=nothing; p=1.2, nstep=100)
+function main(P=nothing; p=1.2, nstep=100)
     if P == nothing
         P = Params(p=p, nstep=nstep)
     end
@@ -20,7 +20,7 @@ function main_swarnendu(P=nothing; p=1.2, nstep=100)
     end
 
     @printf("Integrating:\n")
-    b, w, h = integrate_swarnendu(b, w, P, P.nstep, fplot=P.fplot, fsave=P.fsave, nsave=P.nsave)
+    b, w, h = integrate(b, w, P, P.nstep, fplot=P.fplot, fsave=P.fsave, nsave=P.nsave)
 
     u = hcat(b, w, h)
     @printf("Writing final file %s\n", P.finalfile)

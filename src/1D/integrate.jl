@@ -1,4 +1,4 @@
-function integrate_swarnendu(b, w, P, nstep; fplot=false, fsave=false, nsave=10)
+function integrate(b, w, P, nstep; fplot=false, fsave=false, nsave=10)
     # Inizializzazione del campo h
     h = zeros(P.nx)
     

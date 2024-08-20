@@ -12,7 +12,7 @@
 
 
 
-function laplacian_1D(a, dx) 
+function laplacian(a, dx) 
     n = length(a)
     result = zeros(n)
     
