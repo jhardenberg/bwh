@@ -15,7 +15,6 @@
     dh::Float64 = 333.333        # h diffusivity
     p::Float64 = 1.2             # precipitation rate
     c::Float64 = 0.2             # clonal growth speed
-    ϵ::Float64 = 0.0008          # clonal growth regularization
 
 # Domain size
     Lx::Float64 = 28             # nondimensional X Domain size
@@ -38,5 +37,9 @@
     dt::Float64 = 0.1            # Length of a single integration chunk (this value seems ok)
     nsave::Int64 = 10            # How often (in chunks) to save
     nstep::Int64 = 100           # How many chuncks to run  (total runtime = nstep*dt)
+    b0::Float64 = 0.2442         # Initial b value
+    w0::Float64 = 0.1154         # Initial w value
+    bamp::Float64 = 0.05          # Initial b amplitude
+    wamp::Float64 = 0.05          # Initial w amplitude
 end
 

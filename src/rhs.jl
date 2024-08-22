@@ -83,7 +83,7 @@ clonal_exp = cl_x .+ cl_y
 ##############################################
 
     
-@.  bt = P.ν*b*(1-b)*bint - b  + P.c*clonal_exp + P.ϵ*$laplacian(b, P.dx)  #regularization to avoid numerical issues, original code: + P.db*$laplacian(b, P.dx)   
+@.  bt = P.ν*b*(1-b)*bint - b  + P.c*clonal_exp + P.db*$laplacian(b, P.dx)
 @.  wt = P.p - P.ν*w - P.γ*w*wint + P.dw*$laplacian(w, P.dx)
 
     nothing
