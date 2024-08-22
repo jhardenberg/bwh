@@ -14,8 +14,8 @@ function main(P=nothing; p=1.2, nstep=100)
         w = reshape(a[:,2], P.nx, P.ny)
     else
         @printf("Assigning random initial conditions\n")
-        b = rand(P.nx, P.ny).*0.05 .+0.1077;
-        w = rand(P.nx, P.ny).*0.05 .+0.18
+        b = (rand(P.nx, P.ny).-0.5).*0.01 .+ 0.2442 #.+0.1077;
+        w = (rand(P.nx, P.ny).-0.5).*0.01 .+ 0.1154 # .+0.18
     end
 
     @printf("Integrating:\n")

@@ -19,7 +19,11 @@ function integrate( b, w, P, nstep; fplot=false, fsave=false, nsave=10)
 
         # Integrate over chunck P.dt
         prob = ODEProblem(rhs_stat!, u, (0.,P.dt), (P, fg, σ, h, bint, wint))
-        @time sol=solve(prob, save_everystep=false, save_start=false);
+        @time sol=solve(prob,  OrdinaryDiffEq.BS3(), save_everystep=false, save_start=false);
+        #@time sol=solve(prob,   OrdinaryDiffEq.Tsit5(), save_everystep=false, save_start=false);
+
+        # @printf("Algorithm: %s\n", sol.alg)
+
         u=sol[end]
 
         # Plot solutions

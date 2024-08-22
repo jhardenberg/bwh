@@ -10,6 +10,7 @@ using FFTW
 using BenchmarkTools
 using Printf
 using DelimitedFiles
+using OrdinaryDiffEq
 
 include("Params.jl")
 include("laplacian.jl")

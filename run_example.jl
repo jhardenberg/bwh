@@ -8,6 +8,6 @@ using bwh
 # plotting results during integration
 
 #P = Params(nx=64, ny=64, Lx=28, Ly=28, p=2, fplot=false, dt=0.1, nstep=200)
-P = Params(nx=32, ny=32, Lx=14, Ly=14, p=2, fplot=false, dt=0.1, nstep=1000)
+P = Params(nx=128, ny=128, Lx=28, Ly=28, p=2, fplot=false, dt=1, nstep=20)
 b,w,h = bwh.main(P)
 plotbwh(b, w, h, P, P.dt*100)

@@ -33,23 +33,28 @@ function rhs_stat!(ut, u, p, t)
 ########## pay attention to the border
     for j=1 : (P.nx - 1) 
         Dx1[:, j] = ( b[:, j+1] - b[:, j] ) ./ P.dx
+        Dx2[:, (j+1)] = Dx1[:, j] 
     end
 
 ########## periodic conditions
 
     Dx1[:, P.nx] = ( b[:, 1] - b[:, P.nx] ) ./ P.dx
+    Dx2[:, 1] = Dx1[:, P.nx] 
 
 ########## repeat for y
     for i=1 : (P.nx -1)
         Dy1[i, :] = ( b[i+1, :] - b[i, :] ) ./ P.dx
+        Dy2[(i+1), :] = Dy1[i, :] 
     end
 
     Dy1[P.nx, :] = ( b[1, :] - b[P.nx, :] ) ./ P.dx
+    Dy2[1, :] = Dy1[P.nx, :] 
 
 ##############################################
 ######## Clonal stuff ########################
 
-    norma1 = .√( ( Dx1 .* Dx1 ) + ( Dy1 .* Dy1 ) ) .+ 1e-20 #.+ 0.0000001
+    #norma1 = .√( ( Dx1 .* Dx1 ) + ( Dy1 .* Dy1 ) ) .+ 1e-20 #.+ 0.0000001
+    norma1 = .√( ( ( Dx2 .* Dx2 ) +  (Dx1 .* Dx1 ) + ( Dy2 .* Dy2 ) + ( Dy1 .* Dy1 ) )./ 2 ) .+ 1e-20 #.+ 0.0000001
 
 ########## interpolation of b and w #############
   
