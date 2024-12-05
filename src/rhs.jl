@@ -28,7 +28,7 @@ function rhs_stat!(ut, u, p, t)
 
   global iint
 
-  P, fg, σ, h, bint, wint, n_t_w, n_t_b = p
+  P, fg, σ, h, bint, wint, n_t_w, n_t_b, d_t_w, d_t_b = p
   b = @view u[:,:,1]
   w = @view u[:,:,2]
   bt = @view ut[:,:,1]
@@ -69,8 +69,13 @@ function rhs_stat!(ut, u, p, t)
   iint += 1
 
   if P.manual_laplacian==1
-    @.  bt = b*(1-b)*bint - b  + P.db*$laplacian_simple(b, P, n_t_b)
-    @.  wt = w_in - P.ν*w/(1+P.ρ*b) - w*wint + P.dw*$laplacian_simple(w, P, n_t_w)
+    if P.weighted_laplacian==1 #consider the distance weights included in d_t_b/d_t_w
+      @.  bt = b*(1-b)*bint - b  + P.db*$laplacian_simple(b, P, n_t_b, d_t_b)
+      @.  wt = w_in - P.ν*w/(1+P.ρ*b) - w*wint + P.dw*$laplacian_simple(w, P, n_t_w, d_t_w)
+    else #do not consider the weights (simple network)
+      @.  bt = b*(1-b)*bint - b  + P.db*$laplacian_simple(b, P, n_t_b)
+      @.  wt = w_in - P.ν*w/(1+P.ρ*b) - w*wint + P.dw*$laplacian_simple(w, P, n_t_w)
+    end
   else
     @.  bt = b*(1-b)*bint - b  + P.db*$laplacian(b, P.dx)
     @.  wt = w_in - P.ν*w/(1+P.ρ*b) - w*wint + P.dw*$laplacian(w, P.dx)

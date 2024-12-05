@@ -21,6 +21,7 @@
                                  # if set to 1 we have the full model (Gilad et al. 2004/2007)
                                  # if set to 2 we have the simplified Zelnik model (Zelnik et al. 2015), the root augmentation is reduced to the local term (1+ηb) and there is no h 
     manual_laplacian::Int = 0    # if set to 1 the laplacian is computed "manually" Kernel.Laplacian (to be used for network conversion)
+    weighted_laplacian::Int = 0  # if set to 1 the laplacian is computed on a weighted matrix based on distance
     phiw::Float64 = 0            # probability of shortcuts over the regular lattice for water diffusion 
     phib::Float64 = 0            # probability of shortcuts over the regular lattice for biomass diffusion
 
@@ -41,11 +42,15 @@
     outfile="bwh.dat"           # Name of output file
     initfile = "bwh.init.dat"   # Name of initialization file (used if freadinit==true)
     finalfile="bwh.final.dat"   # Name of final state
+    read_shortcuts_b::String="none" #file from which to read the random links applied to the network for b diffusion
+    read_shortcuts_w::String="none" #file from which to read the random links applied to the network for w diffusion
+    save_shortcuts_b::String="none"  #file where to save the random links applied to the network for b diffusion
+    save_shortcuts_w::String="none"  #file where to save the random links applied to the network for w diffusion
     freadinit::Bool = false      # Start from restart
     fplot::Bool = false          # if to show plots during run
     fplotsave::Bool = false      # if to save intermediate plots
     nplotsave::Int64 = 500       # How often to save plots
-    dirplotsave::String=""
+    dirplotsave::String="none"
     fsave::Bool = true           # if to save intermediate results
     dt::Float64 = 0.1          # Length of a single integration chunk (this value seems ok)
     nsave::Int64 = 10            # How often (in chunks) to save

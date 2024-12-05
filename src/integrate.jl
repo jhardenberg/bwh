@@ -1,4 +1,4 @@
-function integrate( b, w, P, nstep, n_t_w, n_t_b; fplot=false, fplotsave=false, nplotsave=500, fsave=false, nsave=10)
+function integrate( b, w, P, nstep, n_t_w, n_t_b, d_t_w, d_t_b; fplot=false, fplotsave=false, nplotsave=500, fsave=false, nsave=10)
     
     # Initial guess for h
     h = ones(P.nx,P.ny).*P.p./infilt(b,P)
@@ -25,7 +25,7 @@ function integrate( b, w, P, nstep, n_t_w, n_t_b; fplot=false, fplotsave=false, 
         ttot+=P.dt
 
         # Integrate over chunck P.dt
-        prob = ODEProblem(rhs_stat!, u, (0.,P.dt), (P, fg, σ, h, bint, wint, n_t_w, n_t_b))
+        prob = ODEProblem(rhs_stat!, u, (0.,P.dt), (P, fg, σ, h, bint, wint, n_t_w, n_t_b, d_t_w, d_t_b))
         @time sol=solve(prob, save_everystep=false, save_start=false);
         u=sol[1]
 
